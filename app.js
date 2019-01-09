@@ -9,9 +9,16 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
 app.post('/receiveData', (req, res) => {
-    request.post({url:'https://loraiot.cattelecom.com/portal/iotapi/core/devices/{AA00DBCA12EF1116}/downlinkMessages', form: {username : "TGR13_16" , password : "47848308"}}, function(err,httpResponse,body){
-         res.json(body);
-    })
+    var tempReceiveData = new Temperature();
+    
+    var payload = req.body.DevEUI_up.payload_hex;
+    console.log(payload);
+    var temp = (parseInt(payload.slice(4,8),16) * 0.1).toFixed(2);
+    var teamID = (parseInt(payload.slice(12,16),16) *0.01);
+
+    tempReceiveData.teamID = teamID;
+    tempReceiveData.temp = temp;
+    tempReceiveData.save();
 });
 
 app.get('/', (req, res) => {
