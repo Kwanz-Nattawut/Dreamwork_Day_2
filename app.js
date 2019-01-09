@@ -3,9 +3,16 @@ var bodyParser = require('body-parser');
 var app = express();
 var mongoose = require('./mongoose');
 var Temperature = require('./models/temperature.model');
+var request = require('request');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
+
+app.post('/receiveData', (req, res) => {
+    request.post({url:'https://loraiot.cattelecom.com/portal/iotapi/core/devices/{AA00DBCA12EF1116}/downlinkMessages', form: {username : "TGR13_16" , password : "47848308"}}, function(err,httpResponse,body){
+         res.json(body);
+    })
+});
 
 app.get('/', (req, res) => {
     res.send("Hello World");
