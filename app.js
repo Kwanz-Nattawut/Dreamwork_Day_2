@@ -13,12 +13,12 @@ app.post('/receiveData', (req, res) => {
     
     //var payload = req.body.DevEUI_up.payload_hex;
     console.log(req.body);
-    var temp = (parseInt(payload.slice(4,8),16) * 0.1).toFixed(2);
+    /*var temp = (parseInt(payload.slice(4,8),16) * 0.1).toFixed(2);
     var teamID = (parseInt(payload.slice(12,16),16) *0.01);
 
     tempReceiveData.teamID = teamID;
     tempReceiveData.temp = temp;
-    tempReceiveData.save();
+    tempReceiveData.save();*/
 });
 
 app.get('/', (req, res) => {
