@@ -2,24 +2,47 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var app = express();
 var mongoose = require('./mongoose');
-var Tempature = require('./models/temperature.model');
+var Temperature = require('./models/temperature.model');
 
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
 
 app.get('/', (req, res) => {
     res.send("Hello World");
 });
 
 app.get('/showData', (req, res) => {
-    Tempature.find({}).exec((err,Temp) => {
+    Temperature.find({}).exec((err,Temp) => {
          res.json(Temp);
     });
 });
 
-app.post('/addData', (req, res) => {
-    var NewTeam = new Temperature(req.body);
+app.put('/editData/:teamID', (req, res) => {
+    var json = req.params.teamID;
+    var newTemp = req.body.temp;
+    Temperature.findOneAndUpdate({teamID : json},{$set : {temp : newTemp}},{upsert : true},(err,t) => {
+        if(err){
+            throw err;
+        }
+        else
+        {
+             Temperature.findOne({teamID : json}).exec((err,t) => {
+                if(err){
+                    throw err;
+                }
+                else{
+                     res.json(t);
+                }
+             });
+        }
+    });
+});
 
-    NewTeam.save((err,t) => {
+
+app.post('/addData', (req, res) => {
+    var NewTeam_temp = new Temperature(req.body);
+    console.log(NewTeam_temp);
+    NewTeam_temp.save((err,t) => {
         if(err){
             res.send(err);
         }
@@ -29,6 +52,19 @@ app.post('/addData', (req, res) => {
         }
     });
 
+});
+
+app.delete('/deleteData/:teamID', (req, res) => {
+
+    var Delete_tempID = req.params.teamID;
+    console.log(Delete_tempID);
+    Temperature.findOneAndDelete({teamID: Delete_tempID}, (err, t)=>{
+        if(err){
+            throw err;
+        }else{
+             res.json(t);
+        }
+    });
 });
 
 

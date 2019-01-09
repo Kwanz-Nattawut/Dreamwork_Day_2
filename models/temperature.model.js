@@ -7,4 +7,4 @@ var TemperatureSchema = new Schema({
     temp : Number
 });
 
-module.exports = mongoose.model('Temperature',TemperatureSchema);
+module.exports = mongoose.model('temperature',TemperatureSchema);

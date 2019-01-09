@@ -1,12 +1,12 @@
 var mongoose = require('mongoose');
 
-var db = 'mongodb://localhost/tgr2019';
+var db = 'mongodb://localhost/hwData';
 
 var option = {
-    auth : {
+    /*auth : {
         user : 'dreamwork',
         password : 'tgr2019'
-    },
+    },*/
     useNewUrlParser: true
 };
 
