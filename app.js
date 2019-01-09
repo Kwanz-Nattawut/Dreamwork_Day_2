@@ -11,8 +11,8 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.post('/receiveData', (req, res) => {
     var tempReceiveData = new Temperature();
     
-    var payload = req.body.DevEUI_up.payload_hex;
-    console.log(payload);
+    //var payload = req.body.DevEUI_up.payload_hex;
+    console.log(req.body);
     var temp = (parseInt(payload.slice(4,8),16) * 0.1).toFixed(2);
     var teamID = (parseInt(payload.slice(12,16),16) *0.01);
 
