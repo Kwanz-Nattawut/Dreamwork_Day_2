@@ -13,6 +13,7 @@ app.post('/receiveData', (req, res) => {
     
     var payload = req.body.DevEUI_uplink.payload_hex;
     if(payload){
+        console.log(req.body);
         console.log(payload);
         var temp = (parseInt(payload.slice(4,8),16) * 0.1).toFixed(2);
         var teamID = (parseInt(payload.slice(12,16),16) *0.01);
